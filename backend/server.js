@@ -237,6 +237,10 @@ app.use((err, req, res, next) => {
 });
 
 // ===== START SERVER =====
-app.listen(PORT, () => {
-  console.log(`🐱 Mimi server running on http://localhost:${PORT}`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`🐱 Mimi server running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
