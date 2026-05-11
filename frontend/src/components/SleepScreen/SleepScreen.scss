@@ -1,0 +1,152 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.sleep-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sleep-screen__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(26, 16, 96, 0.8) 0%,
+    rgba(10, 5, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(2px);
+
+  // Starfield effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 60% 70%, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 50% 50%, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 80% 10%, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 10% 90%, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 40% 80%, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 90% 60%, #fff, rgba(0, 0, 0, 0));
+    background-size: 200% 200%, 150% 150%, 300% 300%, 250% 250%, 180% 180%, 220% 220%, 260% 260%;
+    background-position: 0 0;
+    opacity: 0.6;
+  }
+}
+
+.sleep-screen__content {
+  @include flex-col-center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.sleep-screen__icon {
+  font-size: 4rem;
+  margin-bottom: $spacing-lg;
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.sleep-screen__message {
+  font-size: 1.5rem;
+  font-weight: $font-weight-bold;
+  color: rgba($color-text, 0.9);
+  margin-bottom: $spacing-lg;
+  letter-spacing: 1px;
+}
+
+.sleep-screen__indicator {
+  @include flex-center;
+  gap: $spacing-sm;
+}
+
+.sleep-screen__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $color-secondary;
+  animation: pulse-dot 1s ease-in-out infinite;
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+.sleep-screen__wake-btn {
+  margin-top: $spacing-lg;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius;
+  border: 2px solid $color-accent-yellow;
+  background: rgba($color-accent-yellow, 0.15);
+  color: $color-text;
+  font-family: $font-main;
+  font-size: 1rem;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  @include transition;
+
+  &:hover:not(:disabled) {
+    background: rgba($color-accent-yellow, 0.3);
+    transform: scale(1.05);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    border-color: rgba($color-text, 0.3);
+  }
+}

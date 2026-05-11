@@ -1,0 +1,48 @@
+// SCSS Variables
+$color-bg: #1a1060;
+$color-primary: #ff006e;
+$color-secondary: #00f5ff;
+$color-accent-yellow: #ffd60a;
+$color-accent-green: #05d9c3;
+$color-accent-purple: #b5179e;
+$color-accent-orange: #fb5607;
+
+$color-stat-high: #05d9c3;
+$color-stat-medium: #ffd60a;
+$color-stat-low: #ff006e;
+
+$color-text: #ffffff;
+$color-text-dark: #1a1060;
+
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+
+$border-radius: 16px;
+$border-radius-sm: 8px;
+
+$font-main: 'Nunito', sans-serif;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+$font-weight-heavy: 900;
+
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+:export {
+  colorBg: $color-bg;
+  colorPrimary: $color-primary;
+  colorSecondary: $color-secondary;
+  colorAccentYellow: $color-accent-yellow;
+  colorAccentGreen: $color-accent-green;
+  colorAccentPurple: $color-accent-purple;
+  colorAccentOrange: $color-accent-orange;
+  colorStatHigh: $color-stat-high;
+  colorStatMedium: $color-stat-medium;
+  colorStatLow: $color-stat-low;
+  colorText: $color-text;
+  colorTextDark: $color-text-dark;
+}

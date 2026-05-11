@@ -1,0 +1,412 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes sleeping-pose {
+  0%, 100% {
+    transform: scaleX(0.8) scaleY(0.6) rotateZ(5deg);
+  }
+  50% {
+    transform: scaleX(0.75) scaleY(0.55) rotateZ(-5deg);
+  }
+}
+
+@keyframes hungry-pose {
+  0%, 100% {
+    transform: scaleY(0.95);
+  }
+  50% {
+    transform: scaleY(0.9);
+  }
+}
+
+@keyframes sick-wobble {
+  0%, 100% {
+    transform: translateX(0) rotateZ(0);
+  }
+  25% {
+    transform: translateX(-3px) rotateZ(-1deg);
+  }
+  50% {
+    transform: translateX(3px) rotateZ(1deg);
+  }
+  75% {
+    transform: translateX(-3px) rotateZ(-1deg);
+  }
+}
+
+@keyframes dancing {
+  0%, 100% {
+    transform: translateX(0) rotateZ(0);
+  }
+  25% {
+    transform: translateX(-10px) rotateZ(-5deg);
+  }
+  75% {
+    transform: translateX(10px) rotateZ(5deg);
+  }
+}
+
+@keyframes jumping {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes spinning {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes floating-zzz {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) translateX(20px);
+  }
+}
+
+@keyframes sick-swirl {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.cat-container {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  @include flex-center;
+}
+
+.cat {
+  width: 100%;
+  height: 100%;
+  max-width: 140px;
+  max-height: 140px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+
+  &__ears {
+    @include transition(transform, 0.3s);
+  }
+
+  &__eyes {
+    @include transition(opacity, 0.2s);
+  }
+
+  &__tail {
+    @include transition(all, 0.3s);
+  }
+
+  &__hat {
+    animation: breathing 2s ease-in-out infinite;
+  }
+
+  &__sunglasses {
+    @include transition(opacity, 0.3s);
+  }
+
+  &__zzz {
+    animation: floating-zzz 2s ease-in infinite;
+  }
+
+  &__sick-swirl {
+    animation: sick-swirl 2s linear infinite;
+  }
+
+  // Animation states
+  &--breathing {
+    animation: breathing 2s ease-in-out infinite;
+  }
+
+  &--sleeping {
+    animation: sleeping-pose 2s ease-in-out infinite;
+
+    .cat__eyes {
+      opacity: 0;
+    }
+
+    .cat__tail {
+      d: path('M 150 160 Q 130 180 140 170');
+      opacity: 0.7;
+    }
+  }
+
+  &--hungry {
+    animation: hungry-pose 2s ease-in-out infinite;
+
+    .cat__ears {
+      transform: scaleY(0.7);
+      opacity: 0.8;
+    }
+
+    .cat__eyes {
+      opacity: 0.6;
+    }
+  }
+
+  &--sick {
+    animation: sick-wobble 1s ease-in-out infinite;
+  }
+
+  &--dancing {
+    animation: dancing 0.8s ease-in-out infinite;
+  }
+
+  &--jumping {
+    animation: jumping 0.6s ease-in-out;
+    animation-iteration-count: 3;
+  }
+
+  &--spinning {
+    animation: spinning 1s linear;
+  }
+
+  &--bow {
+    animation: breathing 2s ease-in-out infinite;
+
+    .cat__ears {
+      transform: rotateZ(-10deg);
+    }
+  }
+}
+
+// Responsive scaling
+@media (max-width: $breakpoint-mobile) {
+  .cat {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .cat-container {
+    height: 140px;
+  }
+}
+
+// ─── Action props ─────────────────────────────────────────────────────────────
+
+// Feed: fish arcs in from the right toward the cat's mouth
+@keyframes prop-feed-fly {
+  0% {
+    transform: translateX(0) translateY(0) rotate(10deg) scale(0.7);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  58% {
+    transform: translateX(-58px) translateY(6px) rotate(-15deg) scale(1.15);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-70px) translateY(12px) rotate(-5deg) scale(0.55);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(-74px) translateY(16px) rotate(0) scale(0.1);
+    opacity: 0;
+  }
+}
+
+// Play: yarn ball bounces up from the paw area
+@keyframes prop-play-bounce {
+  0%   { transform: translateY(0) scale(0.7); opacity: 0; }
+  10%  { opacity: 1; }
+  32%  { transform: translateY(-72px) scale(1.2); }
+  46%  { transform: translateY(-52px) scale(0.88); }
+  60%  { transform: translateY(-68px) scale(1.06); }
+  73%  { transform: translateY(-62px) scale(0.98); }
+  86%  { transform: translateY(-95px) scale(0.75); opacity: 0.7; }
+  100% { transform: translateY(-130px) scale(0.35); opacity: 0; }
+}
+
+// Clean: bubbles float straight up and shrink
+@keyframes prop-bubble-float {
+  0%   { transform: translateY(0) scale(1); opacity: 0.95; }
+  25%  { opacity: 0.9; }
+  100% { transform: translateY(-88px) scale(0.1); opacity: 0; }
+}
+
+// Medicine: pill drops from above, tiny bounce, then fades
+@keyframes prop-medicine-drop {
+  0% {
+    transform: translateY(-55px) rotate(-20deg) scale(0.6);
+    opacity: 0;
+  }
+  18% { opacity: 1; }
+  46% {
+    transform: translateY(42px) rotate(8deg) scale(1.2);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(32px) rotate(-3deg) scale(0.9);
+    opacity: 1;
+  }
+  73% {
+    transform: translateY(40px) rotate(1deg) scale(1.04);
+    opacity: 1;
+  }
+  86% {
+    transform: translateY(38px) rotate(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(38px) rotate(0) scale(1);
+    opacity: 0;
+  }
+}
+
+// Coffee: cup rises from the left and floats toward the cat's mouth
+@keyframes prop-coffee-rise {
+  0% {
+    transform: translateY(35px) rotate(-15deg) scale(0.6);
+    opacity: 0;
+  }
+  18% { opacity: 1; }
+  50% {
+    transform: translateY(-18px) rotate(8deg) scale(1.2);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-28px) rotate(3deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50px) rotate(-5deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
+// Sleep: moon rises above the head
+@keyframes prop-moon-rise {
+  0% {
+    transform: translateY(30px) scale(0.4) rotate(-15deg);
+    opacity: 0;
+  }
+  28% {
+    transform: translateY(-22px) scale(1.15) rotate(5deg);
+    opacity: 1;
+  }
+  62% {
+    transform: translateY(-32px) scale(1) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-62px) scale(0.65) rotate(-5deg);
+    opacity: 0;
+  }
+}
+
+// Sleep: individual stars twinkle in
+@keyframes prop-star-twinkle {
+  0%   { transform: scale(0) rotate(0); opacity: 0; }
+  32%  { transform: scale(1.45) rotate(20deg); opacity: 1; }
+  62%  { transform: scale(1) rotate(0); opacity: 0.85; }
+  100% { transform: scale(0) rotate(-15deg); opacity: 0; }
+}
+
+// ─── Shared base ──────────────────────────────────────────────────────────────
+
+.cat__action-prop {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  font-size: 2rem;
+  line-height: 1;
+
+  // Feed: starts just past the cat's right edge, at mouth height (~38% down)
+  &--feed {
+    left: calc(50% + 62px);
+    top: 38%;
+    animation: prop-feed-fly 1.45s ease-in-out forwards;
+  }
+
+  // Play: starts at the bottom-center, bounces up through the paw area
+  &--play {
+    left: calc(50% - 1rem);
+    bottom: 0;
+    animation: prop-play-bounce 1.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  }
+
+  // Clean: zero-size anchor at body-center; bubbles are children
+  &--clean {
+    left: 50%;
+    top: 62%;
+    width: 0;
+    height: 0;
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(135, 206, 250, 0.32);
+      border: 2px solid rgba(135, 206, 250, 0.9);
+      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.5);
+      animation: prop-bubble-float 1.4s ease-out forwards;
+
+      &--1 { width: 16px; height: 16px; left: -36px; top:  -2px; animation-delay: 0s; }
+      &--2 { width: 22px; height: 22px; left:  -9px; top:   5px; animation-delay: 0.18s; }
+      &--3 { width: 14px; height: 14px; left:  18px; top:  -8px; animation-delay: 0.35s; }
+      &--4 { width: 11px; height: 11px; left: -24px; top:  12px; animation-delay: 0.08s; }
+      &--5 { width: 18px; height: 18px; left:   7px; top:  10px; animation-delay: 0.25s; }
+    }
+  }
+
+  // Medicine: starts above the head, drops down to forehead height
+  &--medicine {
+    left: calc(50% - 1rem);
+    top: 0;
+    animation: prop-medicine-drop 1.5s ease-in-out forwards;
+  }
+
+  // Coffee: rises from the left side at body height
+  &--coffee {
+    left: calc(50% - 80px);
+    top: 52%;
+    animation: prop-coffee-rise 1.5s ease-out forwards;
+  }
+
+  // Sleep: zero-size anchor at head-center; moon + stars are children
+  &--sleep {
+    left: 50%;
+    top: 32%;
+    width: 0;
+    height: 0;
+
+    .moon {
+      position: absolute;
+      left: -1rem;
+      top: 0;
+      font-size: 2rem;
+      animation: prop-moon-rise 1.6s ease-out forwards;
+    }
+
+    .star {
+      position: absolute;
+      font-size: 1.1rem;
+      color: $color-accent-yellow;
+
+      &--1 { left: -52px; top: -18px; animation: prop-star-twinkle 1.4s ease-out forwards; animation-delay: 0.14s; }
+      &--2 { left:  36px; top: -12px; animation: prop-star-twinkle 1.4s ease-out forwards; animation-delay: 0.34s; }
+      &--3 { left: -22px; top: -44px; animation: prop-star-twinkle 1.4s ease-out forwards; animation-delay: 0.05s; }
+    }
+  }
+}

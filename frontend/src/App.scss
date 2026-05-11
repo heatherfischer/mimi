@@ -1,0 +1,174 @@
+@import './styles/variables.scss';
+@import './styles/mixins.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: $font-main;
+  background: $color-bg;
+  color: $color-text;
+  overflow: hidden;
+}
+
+.app {
+  @include flex-col;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1060 0%, #2d0a5e 50%, #1a1060 100%);
+  position: relative;
+
+  &--loading,
+  &--error {
+    @include flex-center;
+  }
+
+  &__loading-text,
+  &__error-text {
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    text-align: center;
+  }
+
+  &__error-text {
+    color: #ff6b6b;
+    margin-bottom: $spacing-md;
+  }
+
+  &__header {
+    @include flex-between;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    @include flex-center;
+    gap: $spacing-sm;
+    font-size: 1.375rem;
+    font-weight: $font-weight-heavy;
+    letter-spacing: 1px;
+  }
+
+  &__pet-name {
+    background: linear-gradient(135deg, $color-secondary, $color-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__pet-icon {
+    animation: bounce 1s ease-in-out infinite;
+  }
+
+  &__status {
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+    font-size: 0.875rem;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba($color-accent-green, 0.2);
+    border: 2px solid $color-accent-green;
+    @include transition;
+
+    &--idle {
+      border-color: $color-accent-green;
+      background: rgba($color-accent-green, 0.15);
+    }
+
+    &--hungry {
+      border-color: $color-accent-orange;
+      background: rgba($color-accent-orange, 0.15);
+    }
+
+    &--sleeping {
+      border-color: $color-secondary;
+      background: rgba($color-secondary, 0.15);
+    }
+
+    &--sick {
+      border-color: $color-primary;
+      background: rgba($color-primary, 0.15);
+      animation: pulse-status 1s ease-in-out infinite;
+    }
+  }
+
+  &__stage {
+    @include flex-center;
+    flex: 1 1 auto;
+    padding: $spacing-sm;
+    min-height: 140px;
+    position: relative;
+    overflow: visible;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.375rem;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+
+    @include tablet {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__actions {
+    padding: 0.375rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-status {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// Mobile responsive
+@media (max-width: $breakpoint-mobile) {
+  .app {
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-sm;
+      padding: $spacing-md;
+    }
+
+    &__actions {
+      padding: $spacing-md;
+    }
+  }
+}

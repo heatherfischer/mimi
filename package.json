@@ -1,0 +1,21 @@
+{
+  "name": "mimi-virtual-cat",
+  "version": "1.0.0",
+  "description": "Tamagotchi-style virtual cat game for German third-graders",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd backend && node server.js",
+    "client:dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview",
+    "test": "cd frontend && npm run test",
+    "test:ui": "cd frontend && npm run test:ui"
+  },
+  "keywords": ["tamagotchi", "cat", "game", "react", "express"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

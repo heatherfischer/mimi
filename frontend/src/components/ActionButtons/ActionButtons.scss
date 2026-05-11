@@ -1,0 +1,99 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.action-buttons {
+  display: grid;
+  gap: 0.5rem;
+  padding: $spacing-sm;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: $border-radius-sm;
+  backdrop-filter: blur(10px);
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+.action-btn {
+  @include flex-col-center;
+  @include button-reset;
+  position: relative;
+  padding: 0.625rem;
+  border-radius: $border-radius-sm;
+  font-weight: $font-weight-bold;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: $color-text-dark;
+  overflow: hidden;
+  @include transition;
+  @include shadow-md;
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:hover {
+      @include shadow-lg;
+      transform: scale(1.02);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &__cooldown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    @include transition(width, 0.1s, linear);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &__icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    z-index: 2;
+  }
+
+  &__label {
+    z-index: 2;
+    font-size: 0.65rem;
+  }
+
+  // Color variants
+  &--feed {
+    @include gradient($color-accent-orange, #ff8c42);
+  }
+
+  &--play {
+    @include gradient($color-accent-purple, #d946ef);
+  }
+
+  &--clean {
+    @include gradient($color-accent-green, #10b981);
+  }
+
+  &--sleep {
+    @include gradient(#3b82f6, #1d4ed8);
+  }
+
+  &--medicine {
+    @include gradient($color-accent-yellow, #fbbf24);
+  }
+
+  &--coffee {
+    @include gradient(#92400e, #b45309);
+    color: $color-text;
+  }
+}
